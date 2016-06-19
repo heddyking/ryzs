@@ -159,16 +159,37 @@ angular.module('app.controllers', [])
 
 })
    
-.controller('page9Ctrl', function($scope) {
-
+.controller('page9Ctrl', function($scope,$ionicPopup) {
+    $scope.report=function(r){
+      console.log(r);
+      if(!r.username || !r.reason){
+        $ionicPopup.alert({ title: '提示信息', template: '请补全举报信息'});
+      }
+      $ionicPopup.alert({ title: '举报成功', template: '<p>举报对象：'+r.username+'</p>'+'<p>举报内容：'+r.reason+'</p>'});
+    }
 })
    
 .controller('page10Ctrl', function($scope) {
 
 })
    
-.controller('page11Ctrl', function($scope) {
+.controller('page11Ctrl', function($scope,$state, $http) {
+    $scope.user=_user;
 
+    $http({
+           method : 'GET',
+           url : 'http://xiaoxiwang.cn:5000/getQuestions?username='+_user.username
+    }).success(function(res){
+           console.log(res);
+           $scope.questions=res;
+           $scope.have=res && res.length>0;
+           
+    }).error(function(error){
+           console.log(error);
+           $scope.questions=[];
+           $scope.have=false;
+           $ionicPopup.alert({ title: '获取信息失败', template: '系统错误，请重试'});
+    });
 })
  
 
