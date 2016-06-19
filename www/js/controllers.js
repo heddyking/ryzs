@@ -78,7 +78,7 @@ angular.module('app.controllers', [])
        	   
       	}).error(function(error){
            console.log(error);
-           $ionicPopup.alert({ title: '登录失败', template: '系统错误，请重试'});
+           $ionicPopup.alert({ title: '登录失败', template: '系统错误，请重试'+JSON.stringify(error)});
       	});
   	};
 })
